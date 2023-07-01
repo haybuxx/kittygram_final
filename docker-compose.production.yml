@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  pg_data_kitty_production:
+  static_kitty_production:
+  media_kitty_production:
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - pg_data_kitty_production:/var/lib/postgresql/data
+    env_file: .env
+  backend:
+    # build: ./backend/
+    image: haybuxx/kittygram_backend
+    env_file: .env
+    volumes:
+      - media_kitty_production:/app/media/cats/images/
+      - static_kitty_production:/backend_static/
+    depends_on:
+      - db
+  frontend:
+    image: haybuxx/kittygram_frontend
+    env_file: .env
+    build: ./frontend/
+    command: cp -r /app/build/. /frontend_static/
+    volumes:
+      - static_kitty_production:/frontend_static
+  gateway:
+    # build: ./nginx/
+    image: haybuxx/kittygram_gateway
+    env_file: .env
+    ports:
+      - 9000:80
+    volumes:
+      - static_kitty_production:/staticfiles/
+      - media_kitty_production:/media/cats/images/
