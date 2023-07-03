@@ -1,9 +1,6 @@
 name: Main Kittygram workflow
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   tests:
@@ -151,6 +148,7 @@ jobs:
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd kittygram
+          sudo docker system prune -a --force
           sudo docker compose -f docker-compose.production.yml pull
           sudo docker compose -f docker-compose.production.yml down
           sudo docker compose -f docker-compose.production.yml up -d
