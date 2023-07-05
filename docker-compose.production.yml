@@ -22,9 +22,9 @@ services:
   frontend:
     image: haybuxx/kittygram_frontend
     env_file: .env
-    command: cp -r /app/build/. /static/ #frontend
+    command: cp -r /app/build/. /static/
     volumes:
-      - static:/static #frontend
+      - static:/static
   gateway:
     image: haybuxx/kittygram_gateway
     env_file: .env
