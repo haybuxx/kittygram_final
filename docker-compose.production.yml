@@ -17,14 +17,14 @@ services:
     depends_on:
       - db
     volumes:
-      - media:/media
-      - static:/backend_static
+      - media:/app/media
+      - static:/static #frontend
   frontend:
     image: haybuxx/kittygram_frontend
     env_file: .env
-    command: cp -r /app/build/. /frontend_static/
+    command: cp -r /app/build/. /static/ #frontend
     volumes:
-      - static:/frontend_static
+      - static:/static #frontend
   gateway:
     image: haybuxx/kittygram_gateway
     env_file: .env
