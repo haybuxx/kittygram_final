@@ -18,7 +18,7 @@ services:
       - db
     volumes:
       - media:/app/media
-      - static:/static #frontend
+      - static:/backend_static
   frontend:
     image: haybuxx/kittygram_frontend
     env_file: .env
